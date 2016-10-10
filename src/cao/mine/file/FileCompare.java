@@ -27,7 +27,7 @@ public class FileCompare {
             Object key= it.next();
             if (isFile(newJson.get(key))) {
                 if (oldJson.get(key)==null){
-                    compareList.put(key.toString(),((JSONObject)newJson.get(key)).get("path"));
+                    compareList.put(key.toString(),(JSONObject)newJson.get(key));
                 }
             }else{
                 compare((JSONObject) oldJson.get(key), (JSONObject) newJson.get(key));

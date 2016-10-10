@@ -1,12 +1,10 @@
 package cao.mine.file;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -16,7 +14,7 @@ public class FileTool {
     private String path;
 
     public FileTool(String path) {
-        this.path = path;
+        this.path = path.replace("\\", "/");
     }
 
     public JSONObject getFileStructure() {
@@ -26,7 +24,7 @@ public class FileTool {
         }
         JSONObject json = null;
         try {
-            json=Structure(file);
+            json = Structure(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,8 +35,6 @@ public class FileTool {
         File files[] = file.listFiles();
         JSONObject json = new JSONObject();
         for (int i = 0; i < files.length; i++) {
-            JSONArray array=new JSONArray();
-            JSONObject singleJson=new JSONObject();
             if (files[i].isFile()) {
                 json.put(files[i].getName(), fileJsonMark(files[i]));
             }
@@ -49,11 +45,12 @@ public class FileTool {
         }
         return json;
     }
+
     private JSONObject fileJsonMark(File file) throws IOException {
-        JSONObject json=new JSONObject();
-        json.put("isFile",1);
-        json.put("md5",DigestUtils.md5Hex(new FileInputStream(file)));
-        json.put("path",file.getParentFile());
+        JSONObject json = new JSONObject();
+        json.put("isFile", 1);
+        json.put("md5", DigestUtils.md5Hex(new FileInputStream(file)));
+        json.put("path", file.getParentFile().toString().replace("\\", "/").replace(path, "/"));
         return json;
     }
 
