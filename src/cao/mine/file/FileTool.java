@@ -39,7 +39,6 @@ public class FileTool {
                 json.put(files[i].getName(), fileJsonMark(files[i]));
             }
             if (files[i].isDirectory()) {
-
                 json.put(files[i].getName(), Structure(files[i]));
             }
         }

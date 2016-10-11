@@ -35,7 +35,7 @@ public class MyButtonCtrl {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SendTestMsg(context).run();
+                new SendTestMsg(context).go();
             }
         };
     }

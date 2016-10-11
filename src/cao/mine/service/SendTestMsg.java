@@ -1,6 +1,7 @@
 package cao.mine.service;
 
 import cao.mine.Listen.SocketListener;
+import cao.mine.Listen.SocketTemp;
 import cao.mine.init.Context;
 
 import javax.swing.*;
@@ -16,65 +17,33 @@ import java.util.concurrent.ExecutorService;
  */
 public class SendTestMsg implements ButtonRun {
     private Socket socket;
-    private ExecutorService executorService;
-    private int lock = 1;
+    private ExecutorService executorService;//软件全局线程池
 
     public SendTestMsg(Context context) {
         this.socket = context.getSocket();
         this.executorService = context.getThreadPool();
-
     }
 
-    public void run() {
-        long a = System.currentTimeMillis();
+    public void go() {
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
             printWriter.println("我是客户端" + 1);
             printWriter.flush();
-            executorService.execute(listen());
+            SocketTemp temp=new SocketTemp();
+            temp.setSocket(socket);
+            temp.setTime(5000);
+            executorService.execute(new SocketListener(temp));//开启监听线程，监听此连接超过5秒阻塞时自动关闭连接
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String str = in.readLine();
-            lock = 0;
+            temp.setLock(false); //执行readline完成后，释放锁，子线程关闭
             if (str == null) {
                 System.out.print("服务器返回空，可能断开socket连接");
+                socket.close();
             }
-            System.out.println(str);
-            System.out.println("执行耗时 : " + (System.currentTimeMillis() - a) / 1000f + " 秒 ");
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
 
-    private Runnable listen() {
-        return new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    int time = 5000;
-                    while (time >= 0) {
 
-                        if (lock == 0) {
-                            break;
-                        }
-                        Thread.sleep(1000);
-
-                        time = time - 1000;
-                    }
-                    System.out.println("1");
-                    if (lock == 1) {
-                        System.out.println("2");
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                JOptionPane.showMessageDialog(null, "DDD");
-                            }
-                        });
-                        socket.close();
-                    }
-                    System.out.println("3");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-    }
 }

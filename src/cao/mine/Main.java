@@ -9,6 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
 
+import static java.lang.System.currentTimeMillis;
+
 public class Main {
     public static final String address = "localhost";
     public static final int port = 12345;
@@ -23,19 +25,17 @@ public class Main {
 //        MainFrame frame=new MainFrame(context);
 //        context.setMainFrame(frame);
 //        frame.showme();
-        long a = System.currentTimeMillis();
-        FileTool fileTool = new FileTool("C:/Users/10441/Desktop/Work/");
-        JSONObject json = fileTool.getFileStructure();
 
-        System.out.println(json);
-        JSONObject json2= new FileTool("C:/Users/10441/Desktop/Work1").getFileStructure();
-        FileCompare com=new FileCompare();
-        com.compare(json2,json);
-        System.out.println(com.getCompareList());
-        System.out.println("执行耗时 : " + (System.currentTimeMillis() - a));
         //System.out.println(json.keySet().iterator().next());
 //        isFile(ob);
 //        System.out.println("执行耗时 : " + (System.currentTimeMillis() - a));
+        long a= currentTimeMillis();
+        JSONObject newJson=new FileTool("C:/Users\\10441\\Desktop\\Work/").getFileStructure();
+        JSONObject oldJson=new FileTool("C:\\Users\\10441\\Desktop\\Work1").getFileStructure();
+
+        System.out.println(new FileCompare().compare(oldJson,newJson));
+        System.out.println("消耗时间："+ (currentTimeMillis()-a)+"毫秒");
+
     }
 
 
