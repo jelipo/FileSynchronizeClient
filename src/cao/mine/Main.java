@@ -30,10 +30,12 @@ public class Main {
 //        isFile(ob);
 //        System.out.println("执行耗时 : " + (System.currentTimeMillis() - a));
         long a= currentTimeMillis();
-        JSONObject newJson=new FileTool("C:/Users\\10441\\Desktop\\Work/").getFileStructure();
-        JSONObject oldJson=new FileTool("C:\\Users\\10441\\Desktop\\Work1").getFileStructure();
+        JSONObject clientJson=new FileTool("C:/Users\\10441\\Desktop\\Work").getFileStructure();
+        JSONObject serverJson=new FileTool("C:\\Users\\10441\\Desktop\\Work1").getFileStructure();
+//        JSONObject clientJson=new FileTool("G:\\GOT").getFileStructure();
+//        JSONObject serverJson=new FileTool("G:\\GOT").getFileStructure();
 
-        System.out.println(new FileCompare().compare(oldJson,newJson));
+        System.out.println(new FileCompare().compare(serverJson,clientJson));
         System.out.println("消耗时间："+ (currentTimeMillis()-a)+"毫秒");
 
     }

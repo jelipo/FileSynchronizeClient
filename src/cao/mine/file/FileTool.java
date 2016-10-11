@@ -14,7 +14,19 @@ public class FileTool {
     private String path;
 
     public FileTool(String path) {
-        this.path = path.replace("\\", "/");
+
+        path = path.replace("\\", "/");
+        String list[] = path.split("/");
+        int length = list.length;
+        String newpath = null;
+        for (int i = 0; i < length; i++) {
+            if (i == 0) {
+                newpath = list[i];
+            } else {
+                newpath = newpath + "/" + list[i];
+            }
+        }
+        this.path = newpath;
     }
 
     public JSONObject getFileStructure() {
@@ -50,6 +62,7 @@ public class FileTool {
         json.put("isFile", 1);
         json.put("md5", DigestUtils.md5Hex(new FileInputStream(file)));
         json.put("path", file.getParentFile().toString().replace("\\", "/").replace(path, "/"));
+        json.put("size", file.length());
         return json;
     }
 
