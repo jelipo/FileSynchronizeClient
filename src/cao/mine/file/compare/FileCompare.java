@@ -1,9 +1,6 @@
-package cao.mine.file;
+package cao.mine.file.compare;
 
 import com.alibaba.fastjson.JSONObject;
-
-import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * Created by 10441 on 2016/10/10.

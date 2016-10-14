@@ -8,30 +8,26 @@ import java.net.Socket;
  */
 public class SocketListener implements Runnable {
 
-    private int time;
-    private Boolean lock;
-    private Socket socket;
+    private SocketTemp temp;
 
     public SocketListener(SocketTemp temp){
-        this.time=temp.getTime();
-        this.lock=temp.getLock();
-        this.socket=temp.getSocket();
+        this.temp=temp;
     }
 
     @Override
     public void run() {
         try {
-            int time =this.time;
+            int time =temp.getTime();
             while (time >= 0) {
-                if (lock) {
+                if (!temp.getLock()) {
                     break;
                 }
                 Thread.sleep(1000);
                 time = time - 1000;
             }
-            if (lock) {
+            if (temp.getLock()) {
                 showDialog();
-                socket.close();
+                temp.getSocket().close();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +36,7 @@ public class SocketListener implements Runnable {
     private void showDialog(){
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JOptionPane.showMessageDialog(null, "线程超过"+String.valueOf(time)+"毫秒没有相应，关闭scoket连接");
+                JOptionPane.showMessageDialog(null, "线程超过"+String.valueOf(temp.getTime())+"毫秒没有相应，关闭scoket连接");
             }
         });
     }

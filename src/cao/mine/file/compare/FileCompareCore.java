@@ -1,4 +1,4 @@
-package cao.mine.file;
+package cao.mine.file.compare;
 
 import com.alibaba.fastjson.JSONObject;
 
