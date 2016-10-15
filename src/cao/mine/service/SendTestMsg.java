@@ -31,7 +31,11 @@ public class SendTestMsg implements ButtonRun {
         json.put("flag","msg");
         json.put("msg","你好，我是客户端");
         SendSocket sendSocket=new SendSocket(context,json,5000);
-        System.out.println(sendSocket.getResult());
+        try {
+            System.out.println(sendSocket.getResult());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

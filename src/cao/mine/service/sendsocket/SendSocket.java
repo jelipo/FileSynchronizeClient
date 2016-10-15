@@ -5,6 +5,9 @@ import cao.mine.Listen.SocketTemp;
 import cao.mine.init.Context;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.codec.binary.Base64;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,12 +33,14 @@ public class SendSocket {
     }
 
 
-    public JSONObject getResult(){
+    public JSONObject getResult() throws IOException {
         String msg=null;
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-            printWriter.println(sendMsg);
+            String a=new String(new BASE64Encoder().encode(sendMsg.toString().getBytes("utf-8")));
+            printWriter.println(a);
             printWriter.flush();
+            socket.shutdownOutput();
             SocketTemp temp=new SocketTemp();
             temp.setSocket(socket);
             temp.setTime(this.outTime);
@@ -51,6 +56,7 @@ public class SendSocket {
         } catch (IOException e1) {
             e1.printStackTrace();
             System.out.println("出现异常，连接可能已断开");
+            socket.close();
         }
         return JSON.parseObject(msg);
     }
