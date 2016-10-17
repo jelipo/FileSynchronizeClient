@@ -38,9 +38,16 @@ public class SendSocket {
         try {
             PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
             String a=new String(new BASE64Encoder().encode(sendMsg.toString().getBytes("utf-8")));
-            printWriter.println(a);
+            JSONObject headJson=new JSONObject();
+            headJson.put("bodyLength",a.length());
+            headJson.put("flag","msg");
+
+            String firstCut="/0!F/";
+            String headCut="/0!H/";
+            String endCut="/0!E/";
+            printWriter.println(firstCut+headJson+headCut+a+endCut);
             printWriter.flush();
-            socket.shutdownOutput();
+
             SocketTemp temp=new SocketTemp();
             temp.setSocket(socket);
             temp.setTime(this.outTime);

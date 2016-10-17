@@ -38,5 +38,4 @@ public class SendTestMsg implements ButtonRun {
         }
     }
 
-
 }
