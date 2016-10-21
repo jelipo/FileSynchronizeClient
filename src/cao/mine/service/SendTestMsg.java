@@ -22,15 +22,15 @@ public class SendTestMsg implements ButtonRun {
     private Context context;
 
     public SendTestMsg(Context context) {
-        this.context=context;
+        this.context = context;
         this.executorService = context.getThreadPool();
     }
 
     public void go() {
-        JSONObject json=new JSONObject();
-        json.put("flag","msg");
-        json.put("msg","你好，我是客户端");
-        SendSocket sendSocket=new SendSocket(context,json,5000);
+        JSONObject json = new JSONObject();
+        json.put("flag", "msg");
+        json.put("msg", "你好，我是客户端");
+        SendSocket sendSocket = new SendSocket(context, json, 50000);
         try {
             System.out.println(sendSocket.getResult());
         } catch (IOException e) {
