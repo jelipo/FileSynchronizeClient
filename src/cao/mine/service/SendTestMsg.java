@@ -21,6 +21,7 @@ public class SendTestMsg implements ButtonRun {
     }
 
     public void go() {
+
         JSONObject json = new JSONObject();
         json.put("flag", "msg");
         json.put("msg", "你好，我是客户端");
