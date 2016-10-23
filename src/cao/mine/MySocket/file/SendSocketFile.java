@@ -51,7 +51,6 @@ public class SendSocketFile {
         byte[] headByte=new Base64().encode(head.toString().getBytes());
         byte[] buffer=ArrayUtils.addAll(ArrayUtils.addAll(headByte,"/0!H/".getBytes()),fileByte);
         SendSocket sendSocket=new SendSocket(context,50000,buffer);
-
         return sendSocket.getResult();
     }
 
