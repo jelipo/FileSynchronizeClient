@@ -2,6 +2,7 @@ package cao.mine.service;
 
 import cao.mine.MySocket.core.SendSocket;
 import cao.mine.MySocket.file.SendSocketFile;
+import cao.mine.MySocket.msg.SendSocketMsg;
 import cao.mine.init.Context;
 import com.alibaba.fastjson.JSONObject;
 
@@ -25,14 +26,11 @@ public class SendTestMsg implements ButtonRun {
     public void go() {
 
         JSONObject json = new JSONObject();
-        json.put("flag", "msg");
-        json.put("msg", "你好，我是客户端");
-        List<JSONObject> list=new LinkedList<>();
-        String parentPath="";
-        String neddToDo="";
-        SendSocketFile sendSocketFile=new SendSocketFile(context,list,parentPath,neddToDo);
+        json.put("msg", "getFileJson");
+        json.put("path","C:/Users/10441/Desktop");
+        SendSocketMsg sendSocketMsg=new SendSocketMsg(context,json);
         try {
-            System.out.println(sendSocketFile.getResult());
+            System.out.println(sendSocketMsg.getResult());
         } catch (IOException e) {
             e.printStackTrace();
         }

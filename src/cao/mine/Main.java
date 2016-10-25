@@ -8,6 +8,7 @@ import cao.mine.file.FileTool;
 import cao.mine.init.Context;
 import cao.mine.jfame.MainFrame;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.ArrayUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -22,9 +23,7 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-
         xianShi();
-
 
 
     }

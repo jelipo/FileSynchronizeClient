@@ -15,6 +15,17 @@ import java.util.List;
 /**
  * Created by 10441 on 2016/10/21.
  */
+
+/**  head格式样例
+    {
+        "flag"="file",
+        "need"="ADD/REPLACE/DEL"  need="DEL"时，"fileKeyList"值为空
+        "fileKeyList"=
+        [
+            {"path"="/src/images","filename"="hello.jpg","fileSize"=(int)469}
+            {"path"="/src/mp3","filename"="go.mp3","fileSize"=(int)1196}
+        ]
+    }*/
 public class SendSocketFile {
     private List<JSONObject> list = new LinkedList<>();
     private String realPath;
@@ -26,6 +37,7 @@ public class SendSocketFile {
         this.needToDO=needToDO;
         this.context=context;
     }
+
 
     public JSONObject getResult() throws IOException {
         Iterator<JSONObject> it = list.iterator();
@@ -48,9 +60,7 @@ public class SendSocketFile {
             }
         }
         head.put("fileKeyList",fileKeyList);
-        byte[] headByte=new Base64().encode(head.toString().getBytes());
-        byte[] buffer=ArrayUtils.addAll(ArrayUtils.addAll(headByte,"/0!H/".getBytes()),fileByte);
-        SendSocket sendSocket=new SendSocket(context,50000,buffer);
+        SendSocket sendSocket=new SendSocket(context,50000,fileByte,head);
         return sendSocket.getResult();
     }
 
