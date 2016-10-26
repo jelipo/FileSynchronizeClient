@@ -64,8 +64,9 @@ public class SendSocket {
         temp.setTime(this.outTime);
         temp.setLock(true);
         executorService.execute(new SocketListener(temp));
-        JSONObject json = runListener(socket);
 
+        JSONObject json = runListener(socket);
+        temp.setLock(false);
         return json;
     }
 
@@ -75,12 +76,14 @@ public class SendSocket {
         Boolean overFlag = false;
         BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
         GetSocket getSocket = new GetSocket(firsFlag, endFlag, in, socket);
+
         JSONObject json = null;
-        while (overFlag || r == -1) {
+        while (!(overFlag) || r != -1) {
             json = getSocket.getResult();
             if (json.getBoolean("status")) {
                 break;
             }
+            System.out.println(json.get("msg"));
         }
         return json;
     }
