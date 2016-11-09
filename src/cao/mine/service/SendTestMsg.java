@@ -20,7 +20,6 @@ public class SendTestMsg implements ButtonRun {
     }
 
     public void go() {
-        long timeA=System.currentTimeMillis();
         JSONObject json = new JSONObject();
         json.put("msg", "getFileJson");
         json.put("path","C:/Users/10441/Desktop/Work");
@@ -30,7 +29,7 @@ public class SendTestMsg implements ButtonRun {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(System.currentTimeMillis()-timeA);
+
     }
 
 }
