@@ -24,12 +24,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         xianShi();
-
+        //duiBi();
 
 
     }
 
-    private void duiBi() {
+    private static void duiBi() {
         long a = currentTimeMillis();
         JSONObject clientJson = new FileTool("C:/Users\\10441\\Desktop\\Work").getFileStructure();
         JSONObject serverJson = new FileTool("C:\\Users\\10441\\Desktop\\Work1").getFileStructure();
