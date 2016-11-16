@@ -16,51 +16,70 @@ import java.util.List;
  * Created by 10441 on 2016/10/21.
  */
 
-/**  head格式样例
-    {
-        "flag"="file",
-        "need"="ADD/REPLACE/DEL"  need="DEL"时，"fileKeyList"值为空
-        "fileKeyList"=
-        [
-            {"path"="/src/images","filename"="hello.jpg","fileSize"=(int)469}
-            {"path"="/src/mp3","filename"="go.mp3","fileSize"=(int)1196}
-        ]
-    }*/
+/**
+ * head格式样例
+ * {
+ * "flag"="file",
+ * "need"="ADD/REPLACE/DEL"  need="DEL"时，"fileKeyList"值为空
+ * "parentPath"+"home/usr/..."     服务端绝对父路径
+ * "fileKeyList"=
+ * [
+ * {"path"="/src/images","filename"="hello.jpg","fileSize"=(int)469}
+ * {"path"="/src/mp3","filename"="go.mp3","fileSize"=(int)1196}
+ * ]
+ * }
+ */
 public class SendSocketFile {
     private List<JSONObject> list = new LinkedList<>();
-    private String realPath;
+    private String serverPath;
+    private String clientPath;
     private String needToDO;
     private Context context;
-    public SendSocketFile(Context context,List<JSONObject> list, String realPath,String needToDO) {
+
+
+    public SendSocketFile(Context context, List<JSONObject> list, String serverPath, String clientPath, String needToDO) {
         this.list = list;
-        this.realPath = realPath;
-        this.needToDO=needToDO;
-        this.context=context;
+        this.serverPath = serverPath;
+        this.clientPath = clientPath;
+        this.needToDO = needToDO;
+        this.context = context;
     }
 
 
     public JSONObject getResult() throws IOException {
         Iterator<JSONObject> it = list.iterator();
-        JSONObject head=new JSONObject();
-        head.put("flag","file");
-        head.put("need",needToDO);
-        byte fileByte[]=new byte[0];
-        JSONArray fileKeyList=new JSONArray();
-        if(!(needToDO.equals("DEL"))){
-            JSONObject newSingleJson=new JSONObject();
+        JSONObject head = new JSONObject();
+        head.put("flag", "file");
+        head.put("need", needToDO);
+        head.put("parentPath",serverPath);
+        byte fileByte[] = new byte[0];
+        JSONArray fileKeyList = new JSONArray();
+        if (!(needToDO.equals("needToDel"))) {
             while (it.hasNext()) {
-                JSONObject fileKey =it.next();
-                File file = new File(realPath+"/"+fileKey.get("path"));
-                byte[] singleFileByte=getBytes(file);
-                newSingleJson.put("path",fileKey.get("path"));
-                newSingleJson.put("filename",file.getName());
-                newSingleJson.put("fileSize",singleFileByte.length);
-                fileByte=ArrayUtils.addAll(fileByte,singleFileByte);
+                JSONObject newSingleJson = new JSONObject();
+                JSONObject fileKey = it.next();
+                File file = new File(clientPath + "/" + fileKey.get("path") + "/" + fileKey.get("filename"));
+                byte[] singleFileByte = getBytes(file);
+                newSingleJson.put("path", fileKey.get("path"));
+                newSingleJson.put("filename", file.getName());
+                newSingleJson.put("fileSize", singleFileByte.length);
+                fileByte = ArrayUtils.addAll(fileByte, singleFileByte);
                 fileKeyList.add(newSingleJson);
             }
+        }else{
+            JSONObject fileKey;
+            while (it.hasNext()) {
+                JSONObject newSingleJson = new JSONObject();
+                fileKey= it.next();
+                newSingleJson.put("path", fileKey.get("path"));
+                newSingleJson.put("filename",fileKey.getString("filename"));
+                newSingleJson.put("fileSize", fileKey.getInteger("size"));
+                fileKeyList.add(newSingleJson);
+            }
+            System.out.println(fileKeyList);
         }
-        head.put("fileKeyList",fileKeyList);
-        SendSocket sendSocket=new SendSocket(context,50000,fileByte,head);
+        head.put("fileKeyList", fileKeyList);
+        SendSocket sendSocket = new SendSocket(context, 50000, fileByte, head);
         return sendSocket.getResult();
     }
 

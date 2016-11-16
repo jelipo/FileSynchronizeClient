@@ -60,7 +60,9 @@ public class FileTool {
     private JSONObject fileJsonMark(File file) throws IOException {
         JSONObject json = new JSONObject();
         json.put("isFile", 1);
-        json.put("md5", DigestUtils.md5Hex(new FileInputStream(file)));
+        FileInputStream fileInputStream=new FileInputStream(file);
+        json.put("md5", DigestUtils.md5Hex(fileInputStream));
+        fileInputStream.close();
         json.put("path", file.getParentFile().toString().replace("\\", "/").replace(path, "/"));
         json.put("size", file.length());
         return json;

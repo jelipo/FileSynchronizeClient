@@ -19,39 +19,49 @@ import java.util.concurrent.ExecutorService;
 public class SendTestMsg implements ButtonRun {
     private ExecutorService executorService;//软件全局线程池
     private Context context;
-
-    public SendTestMsg(Context context) {
+    private String serverPath;
+    private String clientPath;
+    public SendTestMsg(Context context,String serverPath,String clientPath) {
         this.context = context;
         this.executorService = context.getThreadPool();
+        this.serverPath=serverPath;
+        this.clientPath=clientPath;
     }
 
     public void go() {
-        String serverPath="C:/Users/10441/Desktop/Work";
         JSONObject json = new JSONObject();
         json.put("msg", "getFileJson");
         json.put("path",serverPath);
         SendSocketMsg sendSocketMsg=new SendSocketMsg(context,json);
         try {
-
             JSONObject serverJson=sendSocketMsg.getResult().getJSONObject("data");
-            JSONObject clientJson = new FileTool("C:/Users\\10441\\Desktop\\Work1").getFileStructure();
+            JSONObject clientJson = new FileTool(clientPath).getFileStructure();
             JSONObject compareJson=new FileCompare().compare(serverJson, clientJson);
-            Iterator<String> it=compareJson.getJSONObject("neddToDel").keySet().iterator();
-            List<JSONObject> fileList=new LinkedList<>();
-            while (it.hasNext()){
-                String filename=it.next();
-                JSONObject singleFileMsg=compareJson.getJSONObject(filename);
-                singleFileMsg.put("filename",filename);
-                fileList.add(singleFileMsg);
-            }
-            SendSocketFile sendSocketFile=new SendSocketFile(context,fileList,serverPath,"neddToDel");
-            JSONObject result=sendSocketFile.getResult();
-            System.out.println(result);
+            System.out.println(compareJson);
+            JSONObject needToDel=compareJson.getJSONObject("needToDel");
+            JSONObject needToReplace=compareJson.getJSONObject("needToReplace");
+            JSONObject needToAdd=compareJson.getJSONObject("needToAdd");
+            send(needToDel,"needToDel");
+            send(needToReplace,"needToReplace");
+            send(needToAdd,"needToAdd");
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+    private void send(JSONObject needToDoList,String needToDo) throws IOException {
+        Iterator<String> it=needToDoList.keySet().iterator();
+        List<JSONObject> fileList=new LinkedList<>();
+        while (it.hasNext()){
+            String filename=it.next();
+            JSONObject singleFileMsg=needToDoList.getJSONObject(filename);
+            singleFileMsg.put("filename",filename);
+            fileList.add(singleFileMsg);
+        }
+        SendSocketFile sendSocketFile=new SendSocketFile(context,fileList,serverPath,clientPath,needToDo);
+        JSONObject result=sendSocketFile.getResult();
+        System.out.println(result.get("msg"));
     }
 
 }

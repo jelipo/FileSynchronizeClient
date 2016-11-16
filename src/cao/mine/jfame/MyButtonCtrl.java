@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -35,7 +34,9 @@ public class MyButtonCtrl {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SendTestMsg(context).go();
+                String serverPath="C:/Users/10441/Desktop/server";
+                String clientPath="C:/Users/10441/Desktop/client";
+                new SendTestMsg(context,serverPath,clientPath).go();
             }
         };
     }

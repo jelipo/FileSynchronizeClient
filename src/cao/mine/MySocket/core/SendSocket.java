@@ -71,6 +71,13 @@ public class SendSocket {
     }
 
 
+
+    /**
+     * {
+     *     "status"=true/false (Boolean)
+     *     "msg"="XXXXX" (String)
+     * }
+     */
     private JSONObject runListener(Socket socket) throws IOException {
         int r = 0;
         Boolean overFlag = false;
