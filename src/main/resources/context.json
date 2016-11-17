@@ -1,4 +1,5 @@
 {
-  "serveraddress":"localhost",
+  "serveraddress":"192.168.214.132",
+
   "serverport":12345
 }

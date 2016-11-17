@@ -11,13 +11,13 @@ public class FileCompareCore {
     private JSONObject compareList=new JSONObject();
     private JSONObject needToReplaceList=new JSONObject();
     private Boolean isGetReplaceList;
-
+    //                              server            client
     private void compare(JSONObject before, JSONObject after) {
         Iterator it = after.keySet().iterator();
         while (it.hasNext()) {
             Object key = it.next();
             if (isFile(after.get(key))) {
-                if (before.get(key) == null) {
+                if (before==null||before.get(key) == null) {
                     compareList.put(key.toString(), after.get(key));
                 } else if (isGetReplaceList) {
                     if (!(((JSONObject) after.get(key)).get("md5").equals(((JSONObject) before.get(key)).get("md5")))) {
