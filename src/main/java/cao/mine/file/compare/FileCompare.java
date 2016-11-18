@@ -10,7 +10,7 @@ public class FileCompare {
     public JSONObject compare(JSONObject server, JSONObject client) {
 //        JSONObject json = new JSONObject();
         FileCompareCore core=new FileCompareCore();
-        JSONObject needToAdd=core.getCompareList(server, client,true);
+        JSONObject needToAdd=core. getCompareList(server, client,true);
         JSONObject needToReplace=core.getNeedToReplaceList();
         JSONObject needToDel=new FileCompareCore().getCompareList(client,server,false);
         JSONObject json=new JSONObject();

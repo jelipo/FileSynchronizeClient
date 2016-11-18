@@ -34,7 +34,8 @@ public class MyButtonCtrl {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String serverPath="/home/cao/桌面/server";
+                //String serverPath="/home/cao/桌面/server";
+                String serverPath="C:/Users/10441/Desktop/server";
                 String clientPath="C:/Users/10441/Desktop/client";
                 new SendTestMsg(context,serverPath,clientPath).go();
             }

@@ -23,7 +23,11 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        xianShi();
+        JSONObject json=new JSONObject();
+        json.put("dsds","dsds");
+        json.put("dsds","dssdasadsafgsdghds");
+        System.out.print(json.size() v);
+        //xianShi();
         //duiBi();
 
 
