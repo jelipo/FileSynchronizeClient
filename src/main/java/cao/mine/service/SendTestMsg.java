@@ -52,11 +52,16 @@ public class SendTestMsg implements ButtonRun {
     }
     private void send(JSONObject needToDoList,String needToDo) throws IOException {
         Iterator<String> it=needToDoList.keySet().iterator();
+        System.out.println(needToDoList);
         List<JSONObject> fileList=new LinkedList<>();
         while (it.hasNext()){
             String filename=it.next();
             JSONObject singleFileMsg=needToDoList.getJSONObject(filename);
-            singleFileMsg.put("filename",filename);
+            if (needToDoList.getJSONObject(filename).getInteger("isFile")==1){
+                singleFileMsg.put("filename",filename);
+            }else{
+                singleFileMsg.put("filename","/");
+            }
             fileList.add(singleFileMsg);
         }
         SendSocketFile sendSocketFile=new SendSocketFile(context,fileList,serverPath,clientPath,needToDo);

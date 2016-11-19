@@ -21,7 +21,7 @@ import java.util.List;
  * {
  * "flag"="file",
  * "need"="ADD/REPLACE/DEL"  need="DEL"时，"fileKeyList"值为空
- * "parentPath"+"home/usr/..."     服务端绝对父路径
+ * "parentPath"+"/home/cao/Desktop/"     服务端绝对父路径
  * "fileKeyList"=
  * [
  * {"path"="/src/images","filename"="hello.jpg","fileSize"=(int)469}
@@ -61,7 +61,7 @@ public class SendSocketFile {
                 File file = new File(clientPath + "/" + fileKey.get("path") + "/" + fileKey.get("filename"));
                 byte[] singleFileByte = getBytes(file);
                 newSingleJson.put("path", fileKey.get("path"));
-                newSingleJson.put("filename", file.getName());
+                newSingleJson.put("filename", fileKey.get("filename"));
                 newSingleJson.put("fileSize", singleFileByte.length);
                 fileByte = ArrayUtils.addAll(fileByte, singleFileByte);
                 fileKeyList.add(newSingleJson);
@@ -74,6 +74,7 @@ public class SendSocketFile {
                 newSingleJson.put("path", fileKey.get("path"));
                 newSingleJson.put("filename",fileKey.getString("filename"));
                 newSingleJson.put("fileSize", fileKey.getInteger("size"));
+                newSingleJson.put("isFile", fileKey.getInteger("isFile"));
                 fileKeyList.add(newSingleJson);
             }
             System.out.println(fileKeyList);
