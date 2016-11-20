@@ -6,11 +6,9 @@ package cao.mine;//
 import cao.mine.file.compare.FileCompare;
 import cao.mine.file.FileTool;
 import cao.mine.init.Context;
-import cao.mine.jfame.MainFrame;
+import cao.mine.jfame.Frame.LinkFrame;
+import cao.mine.jfame.Frame.MainFrame;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.ArrayUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import java.io.*;
 import java.net.Socket;
@@ -18,14 +16,11 @@ import java.net.Socket;
 import static java.lang.System.currentTimeMillis;
 
 public class Main {
-    public static final String address = "localhost";
-    public static final int port = 12345;
-
 
     public static void main(String[] args) throws IOException {
-        xianShi();
+       // xianShi();
         //duiBi();
-
+        linkFrame();
 
     }
 
@@ -57,6 +52,12 @@ public class Main {
         context.setMainFrame(frame);
         frame.showme();
     }
-
+    private static void linkFrame(){
+        System.out.println("客户端启动...初始化");
+        Context context = new Context();
+        System.out.println("开始连接服务器");
+        LinkFrame link=new LinkFrame(context);
+        link.showme();
+    }
 
 }

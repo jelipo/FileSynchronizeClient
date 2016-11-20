@@ -1,4 +1,4 @@
-package cao.mine.service;
+package cao.mine.jfame.service;
 
 import cao.mine.MySocket.file.SendSocketFile;
 import cao.mine.MySocket.msg.SendSocketMsg;

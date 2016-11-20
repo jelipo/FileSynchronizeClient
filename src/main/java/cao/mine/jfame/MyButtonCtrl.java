@@ -1,7 +1,7 @@
 package cao.mine.jfame;
 
 import cao.mine.init.Context;
-import cao.mine.service.SendTestMsg;
+import cao.mine.jfame.service.SendTestMsg;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
