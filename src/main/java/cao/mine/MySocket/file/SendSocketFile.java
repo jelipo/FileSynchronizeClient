@@ -59,12 +59,21 @@ public class SendSocketFile {
                 JSONObject newSingleJson = new JSONObject();
                 JSONObject fileKey = it.next();
                 File file = new File(clientPath + "/" + fileKey.get("path") + "/" + fileKey.get("filename"));
-                byte[] singleFileByte = getBytes(file);
-                newSingleJson.put("path", fileKey.get("path"));
-                newSingleJson.put("filename", fileKey.get("filename"));
-                newSingleJson.put("fileSize", singleFileByte.length);
-                fileByte = ArrayUtils.addAll(fileByte, singleFileByte);
-                fileKeyList.add(newSingleJson);
+                if (file.isFile()) {
+                    byte[] singleFileByte = getBytes(file);
+                    newSingleJson.put("path", fileKey.get("path"));
+                    newSingleJson.put("filename", fileKey.get("filename"));
+                    newSingleJson.put("fileSize", singleFileByte.length);
+                    newSingleJson.put("isFile", 1);
+                    fileByte = ArrayUtils.addAll(fileByte, singleFileByte);
+                    fileKeyList.add(newSingleJson);
+                }else{
+                    newSingleJson.put("path", fileKey.get("path"));
+                    newSingleJson.put("filename", fileKey.get("filename"));
+                    newSingleJson.put("isFile",0);
+                    newSingleJson.put("fileSize", 0);
+                    fileKeyList.add(newSingleJson);
+                }
             }
         }else{
             JSONObject fileKey;

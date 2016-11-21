@@ -4,6 +4,7 @@ import cao.mine.init.Context;
 import cao.mine.jfame.service.LinkService;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
@@ -46,6 +47,8 @@ public class LinkFrame{
     }
     public void showme() {
         init();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        jf.setLocation((int)(screenSize.getWidth()/2)-150,(int)(screenSize.getHeight()/2)-150);
         jf.setVisible(true);
         jf.setSize(300, 300);
         jf.setResizable(false);

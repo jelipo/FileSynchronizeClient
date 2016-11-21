@@ -36,28 +36,18 @@ public class MainService {
                     JSONObject clientJson = new FileTool(mainFrame.clientPathText.getText()).getFileStructure();
                     JSONObject compareJson = new FileCompare().compare(serverJson, clientJson);
                     System.out.println(compareJson);
-                    mainFrame.needToDel = compareJson.getJSONObject("needToDel");
-                    mainFrame.needToReplace = compareJson.getJSONObject("needToReplace");
-                    mainFrame.needToAdd = compareJson.getJSONObject("needToAdd");
-                    mainFrame.deleteButton.setEnabled(true);
-                    mainFrame.replaceButton.setEnabled(true);
-                    mainFrame.addButton.setEnabled(true);
-
+                    if (!mainFrame.isCompareFrameCreated){
+                        mainFrame.compareFrame=new CompareFrame(mainFrame.context);
+                        mainFrame.isCompareFrameCreated=true;
+                    }
+                    mainFrame.compareFrame.show(compareJson);
                 } catch (IOException e1) {
                     linkAgain(e1,mainFrame);
                 }
             }
         };
     }
-    public ActionListener send(Context context,JSONObject json,String whatNeedToDo){
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CompareFrame compareFrame=new CompareFrame(context);
-                compareFrame.show(json,whatNeedToDo);
-            }
-        };
-    }
+
 
 
     private void linkAgain(IOException e1,MainFrame mainFrame){

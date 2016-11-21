@@ -15,6 +15,7 @@ public class FileCompare {
         JSONObject needToDel=new FileCompareCore().getCompareDelList(client,server,false);
         JSONObject json=new JSONObject();
         json.put("needToAdd",needToAdd);
+        System.out.println(needToAdd);
         json.put("needToDel",needToDel);
         json.put("needToReplace",needToReplace);
         return json;
