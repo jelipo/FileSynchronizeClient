@@ -25,25 +25,7 @@ public class MainService {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JSONObject json = new JSONObject();
-                json.put("msg", "getFileJson");
-                json.put("path", mainFrame.serverPathText.getText());
-                SendSocketMsg sendSocketMsg = new SendSocketMsg(mainFrame.context, json);
-                try {
-                    mainFrame.context.setConfText("lastServerPath",mainFrame.serverPathText.getText());
-                    mainFrame.context.setConfText("lastClientPath",mainFrame.clientPathText.getText());
-                    JSONObject serverJson = sendSocketMsg.getResult().getJSONObject("data");
-                    JSONObject clientJson = new FileTool(mainFrame.clientPathText.getText()).getFileStructure();
-                    JSONObject compareJson = new FileCompare().compare(serverJson, clientJson);
-                    System.out.println(compareJson);
-                    if (!mainFrame.isCompareFrameCreated){
-                        mainFrame.compareFrame=new CompareFrame(mainFrame.context);
-                        mainFrame.isCompareFrameCreated=true;
-                    }
-                    mainFrame.compareFrame.show(compareJson);
-                } catch (IOException e1) {
-                    linkAgain(e1,mainFrame);
-                }
+               doSome(mainFrame);
             }
         };
     }
@@ -65,6 +47,27 @@ public class MainService {
                 e1.printStackTrace();
                 JOptionPane.showMessageDialog(null, "连接失败！请检查网络或服务端！", "连接失败", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    public void doSome(MainFrame mainFrame){
+        JSONObject json = new JSONObject();
+        json.put("msg", "getFileJson");
+        json.put("path", mainFrame.serverPathText.getText());
+        SendSocketMsg sendSocketMsg = new SendSocketMsg(mainFrame.context, json);
+        try {
+            mainFrame.context.setConfText("lastServerPath",mainFrame.serverPathText.getText());
+            mainFrame.context.setConfText("lastClientPath",mainFrame.clientPathText.getText());
+            JSONObject serverJson = sendSocketMsg.getResult().getJSONObject("data");
+            JSONObject clientJson = new FileTool(mainFrame.clientPathText.getText()).getFileStructure();
+            JSONObject compareJson = new FileCompare().compare(serverJson, clientJson);
+            System.out.println(compareJson);
+            if (!mainFrame.isCompareFrameCreated){
+                mainFrame.compareFrame=new CompareFrame(mainFrame.context,mainFrame);
+                mainFrame.isCompareFrameCreated=true;
+            }
+            mainFrame.compareFrame.show(compareJson);
+        } catch (IOException e1) {
+            linkAgain(e1,mainFrame);
         }
     }
 }

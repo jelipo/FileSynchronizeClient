@@ -3,6 +3,7 @@ package cao.mine.jfame.service;
 import cao.mine.MySocket.file.SendSocketFile;
 import cao.mine.init.Context;
 import cao.mine.jfame.Frame.CompareFrame;
+import cao.mine.jfame.Frame.MainFrame;
 import com.alibaba.fastjson.JSONObject;
 
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class CompareService {
 
-    public ActionListener sendDel(CompareFrame compareFrame){
+    public ActionListener sendDel(CompareFrame compareFrame,MainFrame mainFrame){
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -25,13 +26,14 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToDel"),"needToDel",context);
                     System.out.println(result.get("msg"));
+                    mainFrame.send();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         };
     }
-    public ActionListener sendReplace(CompareFrame compareFrame){
+    public ActionListener sendReplace(CompareFrame compareFrame,MainFrame mainFrame){
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -39,13 +41,14 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToReplace"),"needToAdd",context);
                     System.out.println(result.get("msg"));
+                    mainFrame.send();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
         };
     }
-    public ActionListener sendAdd(CompareFrame compareFrame){
+    public ActionListener sendAdd(CompareFrame compareFrame,MainFrame mainFrame){
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +56,7 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToAdd"),"needToAdd",context);
                     System.out.println(result.get("msg"));
+                    mainFrame.send();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }

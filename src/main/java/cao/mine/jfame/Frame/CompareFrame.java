@@ -1,5 +1,6 @@
 package cao.mine.jfame.Frame;
 
+import cao.mine.Main;
 import cao.mine.init.Context;
 import cao.mine.jfame.service.CompareService;
 import cao.mine.jfame.service.MainService;
@@ -8,10 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.IOException;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CompareFrame {
@@ -24,7 +23,9 @@ public class CompareFrame {
     private java.util.List<JTable> tableList;
     private JButton delButton,replaceButton,addButton;
     private CompareService compareService;
-    public CompareFrame(Context context) {
+    private MainFrame mainFrame;
+
+    public CompareFrame(Context context,MainFrame mainFrame) {
         this.jf = new JFrame("主界面 - 文件比对客户端");
         this.context=context;
         compareService=new CompareService();
@@ -33,6 +34,7 @@ public class CompareFrame {
         this.delTable = new JTable(fileTable,Names);
         this.replaceTable = new JTable(fileTable,Names);
         this.addTable = new JTable(fileTable,Names);
+        this.mainFrame=mainFrame;
         tableList=new LinkedList();
         tableList.add(delTable);
         tableList.add(replaceTable);
@@ -74,9 +76,9 @@ public class CompareFrame {
         jf.setSize(900, 400);
         jf.setResizable(false);
 
-        delButton.addActionListener(compareService.sendDel(this));
-        replaceButton.addActionListener(compareService.sendReplace(this));
-        addButton.addActionListener(compareService.sendAdd(this));
+        delButton.addActionListener(compareService.sendDel(this,mainFrame));
+        replaceButton.addActionListener(compareService.sendReplace(this,mainFrame));
+        addButton.addActionListener(compareService.sendAdd(this,mainFrame));
     }
     private void setTable(List<JTable> list) {
         for (int i=0;i<list.size();i++){

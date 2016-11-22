@@ -16,7 +16,7 @@ public class MainFrame {
     public JTextField serverPathText, clientPathText;
     private JButton compareButton;
     public Context context;
-    private MainService mainService;
+    public MainService mainService;
     public CompareFrame compareFrame;
     public Boolean isCompareFrameCreated=false;
 
@@ -51,8 +51,8 @@ public class MainFrame {
 
     }
 
-    public void hide() {
-        jf.setVisible(false);
+    public void send() {
+        mainService.doSome(this);
     }
 
 
