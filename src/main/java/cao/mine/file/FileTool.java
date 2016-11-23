@@ -63,7 +63,7 @@ public class FileTool {
         FileInputStream fileInputStream=new FileInputStream(file);
         json.put("md5", DigestUtils.md5Hex(fileInputStream));
         fileInputStream.close();
-        json.put("path", file.getParentFile().toString().replace("\\", "/").replace(path, "/"));
+        json.put("path", file.getParentFile().toString().replace("\\", "/").replace(path, "/").replace("//","/"));
         json.put("size", file.length());
         return json;
     }

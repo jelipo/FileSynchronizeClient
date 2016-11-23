@@ -122,7 +122,7 @@ public class CompareFrame {
         int i=0;
         while (it.hasNext()){
             Object key=it.next();
-            fileTable[i][0]= key;
+            fileTable[i][0]= key.toString().split("/")[0];
             fileTable[i][1]=list.getJSONObject(key.toString()).get("path");
             i++;
         }

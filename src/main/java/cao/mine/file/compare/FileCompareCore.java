@@ -40,10 +40,7 @@ public class FileCompareCore {
                     if (before.get(key) == null){
                         JSONObject singleDe=new JSONObject();
                         singleDe.put("isFile",0);
-                        Object tem=folder.get(folder.size()-1);
-                        folder.remove(folder.size()-1);
                         singleDe.put("path",getDePath());
-                        folder.add(tem);
                         String name=isReapeat(key.toString());
                         compareList.put(name,singleDe);
                         fileRepeatList.add(name);
@@ -70,6 +67,7 @@ public class FileCompareCore {
         while (it.hasNext()){
             Object key=it.next();
             if (client.size()==0){
+                addFolder.add(key);
                 JSONObject singleDe=new JSONObject();
                 singleDe.put("isFile",0);
                 singleDe.put("path",getAddDePath());
@@ -82,13 +80,13 @@ public class FileCompareCore {
                     compareList.put(name, client.get(key));
                     fileRepeatList.add(name);
                 }else{
+                    addFolder.add(key);
                     JSONObject singleDe=new JSONObject();
                     singleDe.put("isFile",0);
                     singleDe.put("path",getAddDePath());
                     String name=isReapeat(key.toString());
                     compareList.put(name,singleDe);
                     fileRepeatList.add(name);
-                    addFolder.add(key);
                     addCompare(client.getJSONObject(key.toString()));
                 }
             }

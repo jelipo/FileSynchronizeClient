@@ -12,7 +12,7 @@ public class FileCompare {
         FileCompareCore core=new FileCompareCore();
         JSONObject needToAdd=core. getCompareList(server, client,true);
         JSONObject needToReplace=core.getNeedToReplaceList();
-        JSONObject needToDel=new FileCompareCore().getCompareDelList(client,server,false);
+        JSONObject needToDel=new FileCompareCore().getCompareList(client,server,false);
         JSONObject json=new JSONObject();
         json.put("needToAdd",needToAdd);
         System.out.println(needToAdd);
