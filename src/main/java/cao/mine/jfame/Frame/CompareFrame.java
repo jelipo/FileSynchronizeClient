@@ -26,7 +26,7 @@ public class CompareFrame {
     private MainFrame mainFrame;
 
     public CompareFrame(Context context,MainFrame mainFrame) {
-        this.jf = new JFrame("主界面 - 文件比对客户端");
+        this.jf = new JFrame("列表 - 文件比对客户端");
         this.context=context;
         compareService=new CompareService();
         String[] Names = {"文件名", "路径"};

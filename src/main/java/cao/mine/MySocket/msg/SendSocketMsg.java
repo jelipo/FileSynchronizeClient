@@ -19,7 +19,7 @@ public class SendSocketMsg {
     public JSONObject getResult() throws IOException {
         parameter.put("flag","msg");
         byte[] data=new byte[0];
-        SendSocket sendSocket=new SendSocket(context,5000,data,parameter);
+        SendSocket sendSocket=new SendSocket(context,50000,data,parameter);
         return sendSocket.getResult();
     }
 }

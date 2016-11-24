@@ -26,7 +26,9 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToDel"),"needToDel",context);
                     System.out.println(result.get("msg"));
-                    mainFrame.send();
+                    if (result.getBoolean("wrong")!=null){
+                        mainFrame.send();
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -41,7 +43,9 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToReplace"),"needToAdd",context);
                     System.out.println(result.get("msg"));
-                    mainFrame.send();
+                    if (result.getBoolean("wrong")!=null){
+                        mainFrame.send();
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -56,7 +60,10 @@ public class CompareService {
                 try {
                     JSONObject result=send(compareFrame.compareJson.getJSONObject("needToAdd"),"needToAdd",context);
                     System.out.println(result.get("msg"));
-                    mainFrame.send();
+                    if (result.getBoolean("wrong")!=null){
+                        mainFrame.send();
+                    }
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
